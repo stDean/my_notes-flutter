@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "135608405698",
+    "project_id": "moi-livres",
+    "storage_bucket": "moi-livres.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:135608405698:android:44d32245c9e7300989755b",
+        "android_client_info": {
+          "package_name": "com.example.my_motes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdjejlmIIddCNNWSokLfq4yOS82uHYC_g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
