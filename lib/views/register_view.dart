@@ -35,66 +35,63 @@ class _RegisterViewState extends State<RegisterView> {
         title: const Text('Register'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
+      body: Column(
+        children: [
+          TextField(
+            controller: _email,
+            decoration: const InputDecoration(
+              hintText: 'Enter Email Here...',
+            ),
+            keyboardType: TextInputType.emailAddress,
+          ),
+          TextField(
+            controller: _password,
+            decoration: const InputDecoration(
+              hintText: 'Enter Password Here...',
+            ),
+            obscureText: true,
+            obscuringCharacter: '#',
+            autocorrect: false,
+            enableSuggestions: false,
+          ),
+          TextButton(
+            onPressed: () async {
+              final email = _email.text;
+              final password = _password.text;
+
+              try {
+                final userCredentials =
+                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                  email: email,
+                  password: password,
+                );
+
+                print(userCredentials);
+              } on FirebaseAuthException catch (e) {
+                if (e.code == 'email-already-in-use') {
+                  print('Email Already Exists!');
+                } else if (e.code == 'weak-password') {
+                  print('Weak Password!');
+                } else if (e.code == 'invalid-email') {
+                  print('Email is invalid');
+                } else {
+                  print('Something Went Wrong!!');
+                  print(e.code);
+                }
+              }
+            },
+            child: const Text('Register'),
+          ),
+          TextButton(
+          onPressed: () {
+            Navigator.of(context).pushNamedAndRemoveUntil(
+              '/login/',
+              (route) => false,
+            );
+          },
+          child: const Text('Have an account, Login here.'),
         ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return Column(
-                children: [
-                  TextField(
-                    controller: _email,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter Email Here...',
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  TextField(
-                    controller: _password,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter Password Here...',
-                    ),
-                    obscureText: true,
-                    obscuringCharacter: '#',
-                    autocorrect: false,
-                    enableSuggestions: false,
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      final email = _email.text;
-                      final password = _password.text;
-
-                      try {
-                        final userCredentials = await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                          email: email,
-                          password: password,
-                        );
-
-                        print(userCredentials);
-                      } on FirebaseAuthException catch (e) {
-                        if (e.code == 'email-already-in-use') {
-                          print('Email Already Exists!');
-                        } else if (e.code == 'weak-password') {
-                          print('Weak Password!');
-                        } else if (e.code == 'invalid-email') {
-                          print('Email is invalid');
-                        } else {
-                          print('Something Went Wrong!!');
-                          print(e.code);
-                        }
-                      }
-                    },
-                    child: const Text('Register'),
-                  ),
-                ],
-              );
-            default:
-              return const Text('loading...');
-          }
-        },
+        ],
       ),
     );
   }
