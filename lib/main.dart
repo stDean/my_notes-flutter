@@ -6,7 +6,6 @@ import 'package:my_motes/firebase_options.dart';
 import 'package:my_motes/views/login_view.dart';
 import 'package:my_motes/views/register_view.dart';
 import 'package:my_motes/views/verify_email_view.dart';
-// import 'dart:developer' as devtools show log;
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +22,7 @@ void main() {
         loginRoute: (context) => const LoginView(),
         registerRoute: (context) => const RegisterView(),
         notesRoute: (context) => const NotesView(),
+        verifyEmailRoute: (context) => const VerifyEmailView(),
       },
     ),
   );
@@ -68,8 +68,6 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
-  final GlobalKey myWidgetKey = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,9 +81,8 @@ class _NotesViewState extends State<NotesView> {
                 case MenuActions.logout:
                   final shouldLogOut = await showLogOutDialog(context);
                   if (shouldLogOut) {
-                    final context = myWidgetKey.currentContext;
                     await FirebaseAuth.instance.signOut();
-                    Navigator.of(context!).pushNamedAndRemoveUntil(
+                    Navigator.of(context).pushNamedAndRemoveUntil(
                       loginRoute,
                       (_) => false,
                     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:developer' as devtools show log;
 
 import 'package:my_motes/constants/route.dart';
 import 'package:my_motes/utils/show_error_dialog.dart';
@@ -62,13 +61,16 @@ class _RegisterViewState extends State<RegisterView> {
               final password = _password.text;
 
               try {
-                final userCredentials =
-                    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+                await FirebaseAuth.instance.createUserWithEmailAndPassword(
                   email: email,
                   password: password,
                 );
 
-                devtools.log(userCredentials.toString());
+                User? user = FirebaseAuth.instance.currentUser;
+                await user?.sendEmailVerification();
+
+                // this allows you go back to prev page
+                Navigator.of(context).pushNamed(verifyEmailRoute);
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'email-already-in-use') {
                   await showErrorDialog(
@@ -102,6 +104,7 @@ class _RegisterViewState extends State<RegisterView> {
           ),
           TextButton(
             onPressed: () {
+              // this navigation does not allow you go back to prev page
               Navigator.of(context).pushNamedAndRemoveUntil(
                 loginRoute,
                 (route) => false,
