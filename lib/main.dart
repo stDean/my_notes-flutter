@@ -21,6 +21,7 @@ void main() {
       routes: {
         '/login/': (context) => const LoginView(),
         '/register/': (context) => const RegisterView(),
+        '/notes/': (context) => const NotesView(),
       },
     ),
   );
@@ -66,6 +67,8 @@ class NotesView extends StatefulWidget {
 }
 
 class _NotesViewState extends State<NotesView> {
+  final GlobalKey myWidgetKey = GlobalKey();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,8 +82,9 @@ class _NotesViewState extends State<NotesView> {
                 case MenuActions.logout:
                   final shouldLogOut = await showLogOutDialog(context);
                   if (shouldLogOut) {
+                    final context = myWidgetKey.currentContext;
                     await FirebaseAuth.instance.signOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(
+                    Navigator.of(context!).pushNamedAndRemoveUntil(
                       '/login/',
                       (_) => false,
                     );
