@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuthException, FirebaseAuth;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:my_motes/firebase_options.dart';
 import 'package:my_motes/services/auth/auth_exceptions.dart';
 import 'package:my_motes/services/auth/auth_provider.dart';
 import 'package:my_motes/services/auth/auth_user.dart';
@@ -46,6 +48,13 @@ class FirebaseAuthProvider implements AuthProviders {
     } else {
       return null;
     }
+  }
+
+  @override
+  Future<void> initialize() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 
   @override

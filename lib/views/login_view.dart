@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:my_motes/constants/route.dart';
+import 'package:my_motes/services/auth/auth_exceptions.dart';
+import 'package:my_motes/services/auth/auth_service.dart';
 import 'package:my_motes/utils/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -61,13 +61,13 @@ class _LoginViewState extends State<LoginView> {
               final password = _password.text;
 
               try {
-                await FirebaseAuth.instance.signInWithEmailAndPassword(
+                await AuthService.firebase().logIn(
                   email: email,
                   password: password,
                 );
 
-                User? user = FirebaseAuth.instance.currentUser;
-                if (user?.emailVerified ?? false) {
+                final user = AuthService.firebase().currentUser;
+                if (user?.isEmailVerified ?? false) {
                   // email verified
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     notesRoute,
@@ -80,24 +80,17 @@ class _LoginViewState extends State<LoginView> {
                     (route) => false,
                   );
                 }
-              } on FirebaseAuthException catch (e) {
-                if (e.code == 'invalid-credential') {
-                  await showErrorDialog(
-                    context,
-                    'invalid credentials entered',
-                  );
-                } else {
-                  await showErrorDialog(
-                    context,
-                    'Error: ${e.code}',
-                  );
-                }
-              } catch (e) {
+              } on InvalidCredentialAuthException {
                 await showErrorDialog(
                   context,
-                  e.toString(),
+                  'invalid credentials entered',
                 );
-              }
+              } on GenericAuthException {
+                await showErrorDialog(
+                  context,
+                  'Authentication Error!',
+                );
+              } 
             },
             child: const Text('Login'),
           ),

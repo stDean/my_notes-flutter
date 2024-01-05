@@ -1,10 +1,13 @@
 import 'package:my_motes/services/auth/auth_provider.dart';
 import 'package:my_motes/services/auth/auth_user.dart';
+import 'package:my_motes/services/auth/firebase_auth_provider.dart';
 
 class AuthService implements AuthProviders {
   final AuthProviders providers;
 
   const AuthService(this.providers);
+
+  factory AuthService.firebase() => AuthService(FirebaseAuthProvider());
 
   @override
   Future<AuthUser> createUser({
@@ -28,6 +31,9 @@ class AuthService implements AuthProviders {
         email: email,
         password: password,
       );
+
+  @override
+  Future<void> initialize() => providers.initialize();
 
   @override
   Future<void> logOut() => providers.logOut();
