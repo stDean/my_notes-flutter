@@ -9,7 +9,7 @@ const notesTable = 'notes';
 const usersTable = 'users';
 
 const createNoteTable = ''' 
-  CREATE TABLE "notes" (
+  CREATE TABLE IF NOT EXISTS "notes" (
     "id"	INTEGER NOT NULL UNIQUE,
     "user_id"	INTEGER NOT NULL,
     "text"	TEXT NOT NULL,
