@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_motes/services/auth/auth_service.dart';
 import 'package:my_motes/services/crud/notes_service.dart';
-import 'package:my_motes/utils/generics/get_arguments.dart';
+import 'package:my_motes/utils/extensions/get_arguments.dart';
 
 class CreateAndUpdateNoteView extends StatefulWidget {
   const CreateAndUpdateNoteView({super.key});
