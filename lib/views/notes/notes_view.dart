@@ -3,7 +3,8 @@ import 'package:my_motes/constants/route.dart';
 import 'package:my_motes/enums/menu_actions.dart';
 import 'package:my_motes/services/auth/auth_service.dart';
 import 'package:my_motes/services/crud/notes_service.dart';
-import 'package:my_motes/utils/show_logout_dialog.dart';
+import 'package:my_motes/utils/dialog/show_logout_dialog.dart';
+import 'package:my_motes/views/notes/notes_list_view.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -75,24 +76,16 @@ class _NotesViewState extends State<NotesView> {
                     case ConnectionState.active:
                       if (snapshot.hasData) {
                         final notes = snapshot.data as List<DatabaseNote>;
-
-                        return ListView.builder(
-                          itemCount: notes.length,
-                          itemBuilder: (context, index) {
-                            final note = notes[index];
-                            return ListTile(
-                              title: Text(
-                                note.text,
-                                maxLines: 1,
-                                softWrap: true,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            );
+                        print(notes);
+                        return NotesListView(
+                          notes: notes,
+                          onDeleteNote: (note) async {
+                            await _noteService.deleteNote(id: note.id);
                           },
                         );
                       } else {
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          child: Text('No Notes'),
                         );
                       }
                     default:
