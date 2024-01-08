@@ -12,11 +12,18 @@ class FirebaseCloudStorage {
 
   final notes = FirebaseFirestore.instance.collection('notes');
 
-  Future<void> createNewNote({required String ownerUserId}) async {
-    await notes.add({
+  Future<CloudNote> createNewNote({required String ownerUserId}) async {
+    final document = await notes.add({
       ownerUserIdFieldName: ownerUserId,
       textFieldName: '',
     });
+
+    final fetchedNote = await document.get();
+    return CloudNote(
+      documentId: fetchedNote.id,
+      userId: ownerUserId,
+      text: '',
+    );
   }
 
   // get all notes by a articular user id
@@ -36,13 +43,7 @@ class FirebaseCloudStorage {
           )
           .get()
           .then(
-            (value) => value.docs.map((doc) {
-              return CloudNote(
-                documentId: doc.id,
-                userId: doc.data()[ownerUserIdFieldName] as String,
-                text: doc.data()[textFieldName] as String,
-              );
-            }),
+            (value) => value.docs.map((doc) => CloudNote.fromSnapShot(doc)),
           );
     } catch (e) {
       throw CouldNotGetAllNotesException();
