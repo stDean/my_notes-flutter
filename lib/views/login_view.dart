@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_motes/constants/route.dart';
 import 'package:my_motes/services/auth/auth_exceptions.dart';
-import 'package:my_motes/services/auth/auth_service.dart';
+// import 'package:my_motes/services/auth/auth_service.dart';
+import 'package:my_motes/services/auth/bloc/auth_bloc.dart';
+import 'package:my_motes/services/auth/bloc/auth_event.dart';
 import 'package:my_motes/utils/dialog/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
@@ -61,6 +64,14 @@ class _LoginViewState extends State<LoginView> {
               final password = _password.text;
 
               try {
+                context.read<AuthBloc>().add(
+                      AuthEventLogIn(
+                        email: email,
+                        password: password,
+                      ),
+                    );
+
+                /*
                 await AuthService.firebase().logIn(
                   email: email,
                   password: password,
@@ -80,6 +91,7 @@ class _LoginViewState extends State<LoginView> {
                     (route) => false,
                   );
                 }
+                */
               } on InvalidCredentialAuthException {
                 await showErrorDialog(
                   context,
@@ -90,7 +102,7 @@ class _LoginViewState extends State<LoginView> {
                   context,
                   'Authentication Error!',
                 );
-              } 
+              }
             },
             child: const Text('Login'),
           ),
