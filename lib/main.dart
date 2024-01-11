@@ -4,11 +4,11 @@ import 'package:my_motes/constants/route.dart';
 import 'package:my_motes/services/auth/bloc/auth_bloc.dart';
 import 'package:my_motes/services/auth/firebase_auth_provider.dart';
 import 'package:my_motes/views/home_view.dart';
-import 'package:my_motes/views/login_view.dart';
 import 'package:my_motes/views/notes/create_update_note_view.dart';
-import 'package:my_motes/views/notes/notes_view.dart';
-import 'package:my_motes/views/register_view.dart';
-import 'package:my_motes/views/verify_email_view.dart';
+// import 'package:my_motes/views/notes/notes_view.dart';
+// import 'package:my_motes/views/login_view.dart';
+// import 'package:my_motes/views/register_view.dart';
+// import 'package:my_motes/views/verify_email_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,10 +25,10 @@ void main() {
         child: const HomePage(),
       ),
       routes: {
-        loginRoute: (context) => const LoginView(),
-        registerRoute: (context) => const RegisterView(),
-        notesRoute: (context) => const NotesView(),
-        verifyEmailRoute: (context) => const VerifyEmailView(),
+        // loginRoute: (context) => const LoginView(),
+        // registerRoute: (context) => const RegisterView(),
+        // notesRoute: (context) => const NotesView(),
+        // verifyEmailRoute: (context) => const VerifyEmailView(),
         createOrUpdateNoteRoute: (context) => const CreateAndUpdateNoteView(),
       },
     ),

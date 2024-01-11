@@ -5,6 +5,7 @@ import 'package:my_motes/services/auth/bloc/auth_bloc.dart';
 import 'package:my_motes/services/auth/bloc/auth_event.dart';
 import 'package:my_motes/services/auth/bloc/auth_state.dart';
 import 'package:my_motes/views/notes/notes_view.dart';
+import 'package:my_motes/views/register_view.dart';
 import 'package:my_motes/views/verify_email_view.dart';
 import 'package:my_motes/views/login_view.dart';
 
@@ -23,6 +24,8 @@ class HomePage extends StatelessWidget {
           return const VerifyEmailView();
         } else if (state is AuthStateLogOut) {
           return const LoginView();
+        } else if (state is AuthStateRegistering) {
+          return const RegisterView();
         } else {
           return const Scaffold(
             body: Center(
