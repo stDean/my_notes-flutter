@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart' show immutable;
-import 'package:my_motes/services/auth/auth_user.dart';
 
 @immutable
 abstract class AuthEvent {
