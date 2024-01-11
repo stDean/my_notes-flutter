@@ -6,6 +6,7 @@ import 'package:my_motes/services/auth/bloc/auth_event.dart';
 import 'package:my_motes/services/auth/bloc/auth_state.dart';
 import 'package:my_motes/utils/dialog/loading/loading_screen.dart';
 import 'package:my_motes/views/notes/notes_view.dart';
+import 'package:my_motes/views/password_reset_view.dart';
 import 'package:my_motes/views/register_view.dart';
 import 'package:my_motes/views/verify_email_view.dart';
 import 'package:my_motes/views/login_view.dart';
@@ -37,6 +38,8 @@ class HomePage extends StatelessWidget {
           return const LoginView();
         } else if (state is AuthStateRegistering) {
           return const RegisterView();
+        } else if (state is AuthStateForgotPassword) {
+          return const PasswordResetView();
         } else {
           return const Scaffold(
             body: Center(

@@ -51,3 +51,9 @@ class AuthEventSendVerification extends AuthEvent {
 class AuthEventLogOut implements AuthEvent {
   const AuthEventLogOut();
 }
+
+@immutable
+class AuthEventForgotPassword implements AuthEvent {
+  final String? email;
+  const AuthEventForgotPassword({this.email});
+}
