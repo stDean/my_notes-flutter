@@ -2,6 +2,7 @@ import 'package:my_motes/services/auth/auth_provider.dart';
 import 'package:my_motes/services/auth/auth_user.dart';
 import 'package:my_motes/services/auth/firebase_auth_provider.dart';
 
+// this talks to what ever provider in our case firebase(email and password) and expose all its functionality to the UI
 class AuthService implements AuthProviders {
   final AuthProviders providers;
 

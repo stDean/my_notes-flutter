@@ -1,5 +1,6 @@
 import 'package:my_motes/services/auth/auth_user.dart';
 
+// this is the parent provider that encompasses what all providers can do
 abstract class AuthProviders {
   AuthUser? get currentUser;
 
